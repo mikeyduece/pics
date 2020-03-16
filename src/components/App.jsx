@@ -1,10 +1,10 @@
 import React     from 'react'
 
-import SeacrcBar from './SeacrcBar'
+import SearchBar from './SeacrhBar'
 
 const App = () => {
   return (
-    <div><SeacrcBar /></div>
+    <div><SearchBar /></div>
   )
 }
 
