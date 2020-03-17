@@ -1,23 +1,34 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React from 'react'
 
-const ImageCard = props => {
-  const element = useRef()
-  const [imgRef, setImgRef] = useState(0)
-  const [spans, setSpans] = useState(0)
-  const { alt_description, urls, id } = props.image
+class ImageCard extends React.Component {
+  constructor() {
+    super()
 
-  useLayoutEffect(() => {
-    const height = element.current.clientHeight
+    this.state = { spans: 0 }
+    this.imgRef = React.createRef()
+  }
 
-    setImgRef(element.current.addEventListener('load', setSpans))
-    setSpans(Math.ceil(height / 150))
-  }, [])
+  componentDidMount() {
+    this.imgRef.current.addEventListener('load', this.setSpans)
+  }
 
-  return (
-    <div key={ id } style={ { gridRowEnd: `span ${ spans }` } }>
-      <img ref={ element } src={ urls.regular } alt={ alt_description } />
-    </div>
-  )
+  setSpans = () => {
+    const height = this.imgRef.current.clientHeight
+    const spans = Math.ceil(height / 10)
+
+    this.setState({ spans })
+  }
+
+
+  render() {
+    const { alt_description, urls } = this.props.image
+
+    return (
+      <div style={ { gridRowEnd: `span ${ this.state.spans }` } }>
+        <img ref={ this.imgRef } src={ urls.regular } alt={ alt_description } />
+      </div>
+    )
+  }
 }
 
 export default ImageCard
